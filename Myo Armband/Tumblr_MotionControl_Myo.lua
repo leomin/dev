@@ -6,7 +6,7 @@ scriptId = 'com.thalmic.scripts.tumblr'
 --globals
 
 --boolean determining interface mode
-mouseMode = false
+mouseMode = true
 
 --boolean determinind if the fist position is held or released
 --for use with 
@@ -44,6 +44,9 @@ function onPoseEdge(pose, edge)
 		--fist to select
 		--and arm roll for scrolling
 		if(mouseMode == true)
+			--turn on mouse control
+			myo.controlMouse(true)
+			
 			--select things with Fist pose	
 			if pose == "fist" then
 				myo.mouse("left","click")
@@ -52,6 +55,9 @@ function onPoseEdge(pose, edge)
 		end
 		--other mode where we use keyboard keys to navigate
 		if  mouseMode == false
+			--turn off mouse control
+			myo.controlMouse(false)
+			
 			--next post using waveIn motion
 			if pose == "waveIn" then
 				myo.keyboard("J","click")
