@@ -33,8 +33,8 @@ function onPoseEdge(pose, edge)
 			myo.mouse("right","down")
 		end
 		
-		if pose == "waveIn" then
-			myo.keyboard("page_down","click")
+		if pose == "waveOut" then
+			myo.keyboard("pagedown","click")
 		end
 			
 	end
