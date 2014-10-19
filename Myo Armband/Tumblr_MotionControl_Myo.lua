@@ -22,9 +22,9 @@ function onPoseEdge(pose, edge)
     myo.debug("onPoseEdge: " .. pose .. ", " .. edge)
 
 	if edge == "on" then
-		--grab/select things in game with Fist pose	
+		--select things in game with Fist pose	
 		if pose == "fist" then
-			myo.mouse("left","down")
+			myo.mouse("left","click")
 			restvar = math.abs(math.deg(myo.getRoll()));
 		end
 		
@@ -33,14 +33,9 @@ function onPoseEdge(pose, edge)
 			myo.mouse("right","down")
 		end
 		
-		--scroll with roll
-		local direction = myo.getXDirection()
-		myo.debug(math.deg(myo.getRoll()))
-		myo.debug(myo.getXDirection())
-		--if
-		--	myo.debug(math.deg(myo.getRoll()))
-		--	myo.keyboard("down_arrow", "down")
-		--end
+		if pose == "waveIn" then
+			myo.keyboard("page_down","click")
+		end
 			
 	end
 	if edge == "off" then
