@@ -7,7 +7,7 @@ Step 3) that's it, that's all there is.<br>
 <p>Has two modes: using a mouse scheme and using a keyboard scheme - toggle between modes using thumbToPinky pose.
 
 Mouse mode allows user to control mouse, click with “fist”, and scroll
-by rolling arm.</p><br>
+by rolling arm.</p>
 
 Key mode navigates using key mappings (for use with tumblr's endless scrolling):<br>
 Down post: waveIn<br>
