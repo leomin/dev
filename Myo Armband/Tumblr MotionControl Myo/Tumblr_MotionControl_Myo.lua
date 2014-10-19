@@ -31,7 +31,7 @@ function conditionallySwapWave(pose)
 end
 	
 function onPoseEdge(pose, edge)
-    myo.debug("onPoseEdge: " .. pose .. ", " .. edge)
+    
 
 	if edge == "on" then
 		
@@ -44,6 +44,7 @@ function onPoseEdge(pose, edge)
 		--fist to select
 		--and arm roll for scrolling
 		if(mouseMode == true) then
+			myo.debug("mouse mode")
 			--turn on mouse control
 			myo.controlMouse(true)
 			
@@ -56,6 +57,7 @@ function onPoseEdge(pose, edge)
 		end
 		--other mode where we use keyboard keys to navigate
 		if  mouseMode == false then
+			myo.debug("key mode")
 			--turn off mouse control
 			myo.controlMouse(false)
 			
@@ -113,9 +115,9 @@ function onPeriodic()
 	-- poll to see the roll compared to the resting roll value
 	-- (if in mousemode)
 	if(mouseMode == true) and (holdvar ==true) then
-		if math.abs(math.deg(myo.getRoll())) > (9 + restvar) then
+		if math.abs(math.deg(myo.getRoll())) > (8 + restvar) then
 			myo.keyboard("down_arrow","down")
-		elseif math.abs(math.deg(myo.getRoll())) < (restvar-9) then
+		elseif math.abs(math.deg(myo.getRoll())) < (restvar-8) then
 			myo.keyboard("up_arrow","down")
 		end
 	end
