@@ -1,13 +1,5 @@
 scriptId = 'com.thalmic.scripts.hearthstone'
 
-function grab()
-	myo.mouse("left","down")
-end
-
-function select()
-	myo.mouse("left","click")
-end
-
 -- Helpers
 
 -- Makes use of myo.getArm() to swap wave out and wave in when the armband is being worn on
@@ -25,16 +17,19 @@ function conditionallySwapWave(pose)
 end
 	
 function onPoseEdge(pose, edge)
-	    -- Unlock	
     myo.debug("onPoseEdge: " .. pose .. ", " .. edge)
 
 	if edge == "on" then
-		--grab/select things in game	
+		--grab/select things in game with Fist pose	
 		if pose == "fist" then
-				grab()
-				extendUnlock()
+			myo.mouse("left","down")
 		end
-
+		
+		--right click mouse using FingersSpread pose
+		if pose == "fingersSpread" then
+			myo.mouse("right","down")
+		end
+			
 	end
 	if edge == "off" then
 		myo.mouse("left","up")
@@ -48,33 +43,20 @@ function unlock()
     extendUnlock()
 end
 
--- ??????????????
+-- unnecessary for this app
 function extendUnlock()
     unlockedSince = myo.getTimeMilliseconds()
 end
 
--- Time since last activity before we lock
-UNLOCKED_TIMEOUT = 9200
-
-
 function onPeriodic()
-    -- Lock after inactivity
-    if unlocked then
-        -- If we've been unlocked longer than the timeout period, lock.
-        -- Activity will update unlockedSince, see extendUnlock() above.
-        if myo.getTimeMilliseconds() - unlockedSince > UNLOCKED_TIMEOUT then
-            myo.vibrate("short")
-            unlocked = false
-        end
-    end
 end
 
 function onForegroundWindowChange(app, title)
     -- Here we decide if we want to control the new active app.
     myo.debug("onForegroundWindowChange: " .. app .. ", " .. title)
-    if title == string.match(title, 'Hearthstone') or title == string.match(title, 'Debug Console') then
-        myo.debug("You are in control")
+    if title == string.match(title, 'Hearthstone') then		
 		myo.controlMouse(true)
+		myo.debug("mouse enabled")
         return true
 		
     end
