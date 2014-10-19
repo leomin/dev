@@ -1,7 +1,17 @@
 scriptId = 'com.thalmic.scripts.tumblr'
 
---global boolean determining interface mode
+--Robin Goins
+--October 19, 2014
+
+--globals
+
+--boolean determining interface mode
 mouseMode = false
+
+--boolean determinind if the fist position is held or released
+--for use with 
+holdvar = false
+
 
 -- Helpers
 
@@ -66,6 +76,7 @@ function onPoseEdge(pose, edge)
 		end				
 	end
 	
+	--release keys/mouse when pose released
 	if edge == "off" then
 		myo.mouse("left","up")
 		myo.mouse("right","up")
@@ -74,11 +85,7 @@ function onPoseEdge(pose, edge)
 	end
 end
 
-function pageScroll()
-	
-end
-
--- Unlock mechanism
+-- Unlock mechanisms (unused)
 
 function unlock()
     unlocked = true
@@ -89,7 +96,10 @@ function extendUnlock()
     unlockedSince = myo.getTimeMilliseconds()
 end
 
+
 function onPeriodic()
+	-- poll to see the roll compared to the resting roll value
+	-- (if in mousemode)
 	if(mouseMode == true)
 		if math.abs(math.deg(myo.getRoll())) > (9 + restvar) then
 			myo.keyboard("down_arrow","down")
@@ -101,7 +111,6 @@ end
 
 function onForegroundWindowChange(app, title)
     -- Here we decide if we want to control the new active app.
-    --myo.debug("onForegroundWindowChange: " .. app .. ", " .. title)
     if title == string.match(title, '.*Tumblr*.') then		
 		myo.controlMouse(true)
 		myo.debug("mouse enabled")
