@@ -1,11 +1,13 @@
 scriptId = 'com.thalmic.scripts.tumblr'
 
+--global boolean determining interface mode
+mouseMode = false
+
 -- Helpers
 
 -- Makes use of myo.getArm() to swap wave out and wave in when the armband is being worn on
 -- the left arm. This allows us to treat wave out as wave right and wave in as wave
 -- left for consistent direction. The function has no effect on other poses.
-	
 	
 function conditionallySwapWave(pose)
     if myo.getArm() == "left" then
@@ -22,22 +24,48 @@ function onPoseEdge(pose, edge)
     myo.debug("onPoseEdge: " .. pose .. ", " .. edge)
 
 	if edge == "on" then
-		--select things in game with Fist pose	
-		if pose == "fist" then
-			myo.mouse("left","click")
-			restvar = math.abs(math.deg(myo.getRoll()));
+		
+		--mode select using thumbToPinky
+		if pose == "thumbToPinky" then
+			mouseMode = not mouseMode
 		end
 		
-		--right click mouse using FingersSpread pose
-		if pose == "fingersSpread" then
-			myo.mouse("right","down")
+		--mouseMode where we control interface w/ cursor
+		--fist to select
+		--and arm roll for scrolling
+		if(mouseMode == true)
+			--select things with Fist pose	
+			if pose == "fist" then
+				myo.mouse("left","click")
+				restvar = math.abs(math.deg(myo.getRoll()));
+			end
 		end
+		--other mode where we use keyboard keys to navigate
+		if  mouseMode == false
+			--next post using waveIn motion
+			if pose == "waveIn" then
+				myo.keyboard("J","click")
+			end
 		
-		if pose == "waveOut" then
-			myo.keyboard("pagedown","click")
-		end
+			--last post using waveout motion
+			if pose == "waveOut" then
+				myo.keyboard("K","click")
+			end
+		
+			--"like" using fist
+			if pose == "fist" then
+				myo.keyboard("L","click")
+			end
 			
+			--"reblog" using spread
+			if pose == "fingersSpread" then
+				myo.keyboard("option","down")
+				myo.keyboard("R","click")
+				myo.keyboard("option","up")
+			end
+		end				
 	end
+	
 	if edge == "off" then
 		myo.mouse("left","up")
 		myo.mouse("right","up")
@@ -57,17 +85,18 @@ function unlock()
     extendUnlock()
 end
 
--- unnecessary for this app
 function extendUnlock()
     unlockedSince = myo.getTimeMilliseconds()
 end
 
 function onPeriodic()
+	if(mouseMode == true)
 		if math.abs(math.deg(myo.getRoll())) > (9 + restvar) then
 			myo.keyboard("down_arrow","down")
 		elseif math.abs(math.deg(myo.getRoll())) < (restvar-9) then
 			myo.keyboard("up_arrow","down")
 		end
+	end
 end
 
 function onForegroundWindowChange(app, title)
