@@ -51,6 +51,7 @@ function onPoseEdge(pose, edge)
 			if pose == "fist" then
 				myo.mouse("left","click")
 				restvar = math.abs(math.deg(myo.getRoll()));
+				holdvar = true;
 			end
 		end
 		--other mode where we use keyboard keys to navigate
@@ -92,6 +93,7 @@ function onPoseEdge(pose, edge)
 		myo.keyboard("k","up")
 		myo.keyboard("l","up")
 		myo.keyboard("r","up")
+		holdvar = false
 	end
 end
 
@@ -110,7 +112,7 @@ end
 function onPeriodic()
 	-- poll to see the roll compared to the resting roll value
 	-- (if in mousemode)
-	if(mouseMode == true) then
+	if(mouseMode == true) and (holdvar ==true) then
 		if math.abs(math.deg(myo.getRoll())) > (9 + restvar) then
 			myo.keyboard("down_arrow","down")
 		elseif math.abs(math.deg(myo.getRoll())) < (restvar-9) then
