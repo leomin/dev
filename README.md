@@ -1,4 +1,4 @@
-<h1>Easily control Tumblr using a Myo armband!<br></h1>
+<h2>Easily control Tumblr using a Myo armband!<br></h2>
 
 Step 1) Add script to Myo armband<br>
 Step 2) Go to tumblr<br>
