@@ -43,7 +43,7 @@ function onPoseEdge(pose, edge)
 		--mouseMode where we control interface w/ cursor
 		--fist to select
 		--and arm roll for scrolling
-		if(mouseMode == true)
+		if(mouseMode == true) then
 			--turn on mouse control
 			myo.controlMouse(true)
 			
@@ -54,30 +54,30 @@ function onPoseEdge(pose, edge)
 			end
 		end
 		--other mode where we use keyboard keys to navigate
-		if  mouseMode == false
+		if  mouseMode == false then
 			--turn off mouse control
 			myo.controlMouse(false)
 			
 			--next post using waveIn motion
 			if pose == "waveIn" then
-				myo.keyboard("J","click")
+				myo.keyboard("j","down")
 			end
 		
 			--last post using waveout motion
 			if pose == "waveOut" then
-				myo.keyboard("K","click")
+				myo.keyboard("k","down")
 			end
 		
 			--"like" using fist
 			if pose == "fist" then
-				myo.keyboard("L","click")
+				myo.keyboard("l","down")
 			end
 			
 			--"reblog" using spread
 			if pose == "fingersSpread" then
-				myo.keyboard("option","down")
-				myo.keyboard("R","click")
-				myo.keyboard("option","up")
+				myo.keyboard("function","down")
+				myo.keyboard("r","down")
+				myo.keyboard("function","up")
 			end
 		end				
 	end
@@ -88,6 +88,10 @@ function onPoseEdge(pose, edge)
 		myo.mouse("right","up")
 		myo.keyboard("up_arrow","up")
 		myo.keyboard("down_arrow","up")
+		myo.keyboard("j","up")
+		myo.keyboard("k","up")
+		myo.keyboard("l","up")
+		myo.keyboard("r","up")
 	end
 end
 
@@ -106,7 +110,7 @@ end
 function onPeriodic()
 	-- poll to see the roll compared to the resting roll value
 	-- (if in mousemode)
-	if(mouseMode == true)
+	if(mouseMode == true) then
 		if math.abs(math.deg(myo.getRoll())) > (9 + restvar) then
 			myo.keyboard("down_arrow","down")
 		elseif math.abs(math.deg(myo.getRoll())) < (restvar-9) then
